@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_partner_form_inheritt_cabinet" model="ir.ui.view">
+            <field name="name">res.partner.inheritt.cabinet</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <!--    Invisible fields            -->
+                <xpath expr="//field[@name='company_type']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='phone']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='email']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='mobile']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='function']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='vat']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='website']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                 <xpath expr="//field[@name='category_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//notebook//page[1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//notebook//page[2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//notebook//page[3]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='internal_notes']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//div[hasclass('o_address_format')]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//span[hasclass('o_form_label')]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+<!--                <xpath expr="//notebook" position="before">-->
+<!--                <xpath expr="//group" position="before">-->
+<!--                    <button icon="fa-folder" style="width:10%%; height:2cm; margin-left: 10px; margin-bottom:10px; background-color : #0066b2; color:white;" />-->
+<!--                    <button icon="fa-cogs"   style="width:10%%; height:2cm; margin-left: 10px; margin-bottom:10px" class="btn btn-info"/>-->
+<!--                    <button icon="fa-cogs"   style="width:10%%; height:2cm; margin-left: 10px; margin-bottom:10px" class="btn btn-success"/>-->
+
+<!--&lt;!&ndash;                    <br/>&ndash;&gt;-->
+<!--                    <button icon="fa-folder" style="width:10%%; height:2cm; margin-left: 10px; margin-bottom:10px; background-color : #f1912b; color:white;" />-->
+<!--                    <button icon="fa-cogs"   style="width:10%%; height:2cm; margin-left: 10px; margin-bottom:10px; background-color : #d72072; color:white;"/>-->
+<!--                </xpath>-->
+
+
+
+
+                <!--                notebook            -->
+                <xpath expr="//notebook//page[1]" position="before">
+                    <page string="General information" name="general_information">
+
+                        <group>
+                            <group string="Biometry">
+                                <field name="gender"/>
+                                <label string="Data of birth" for="blood_type"/>
+                                <div>
+                                        <field name="dob" class="oe_inline" style="margin-right:30px;"/>
+                                        <field name="age" class="oe_inline" /> years
+                                </div>
+
+                                <label string="Blood type" for="blood_type"/>
+                                    <div>
+                                        <field name="blood_type" class="oe_inline"  />
+                                        <field name="rh" class="oe_inline"/>
+                                    </div>
+                                <field name="height"/>
+                                <field name="weight"/>
+                            </group>
+
+                             <group string="Other">
+
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Patient Address">
+                            <span class="o_form_label o_td_label" name="address_name">
+                                <field name="type" attrs="{'invisible': [('is_company','=', True)], 'required': [('is_company','!=', True)], 'readonly': [('user_ids', '!=', [])]}" class="font-weight-bold"/>
+                                <b attrs="{'invisible': [('is_company', '=', False)]}">Address</b>
+                            </span>
+                            <div class="o_address_format">
+                               <field name="street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="city" placeholder="City" class="o_address_city" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            </div>
+                            </group>
+
+                            <group string="Patient Contact">
+                                <field name="phone"/>
+                                <field name="mobile"/>
+                                <field name="email"/>
+                                <field name="cin"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+
+
+                <xpath expr="//notebook" position="inside">
+                    <page string="Files">
+                        <group>
+                        <field name="files_ids"
+                            nolabel="1" widget="one2many_list" />
+                        </group>
+                    </page>
+                </xpath>
+
+                <xpath expr="//notebook" position="inside">
+                    <page string="Appointments">
+                             <field name="meeting_ids" readonly="1"/>
+                    </page>
+                </xpath>
+
+                <xpath expr="//notebook" position="inside">
+                    <page string="Diseases">
+                        <field name="diseases_ids"
+                            nolabel="1" widget="one2many_list" />
+                    </page>
+                </xpath>
+
+
+
+                <xpath expr="//notebook" position="inside">
+                    <page string="Medicament">
+                        <group>
+                        <field name="medication_ids"
+                            nolabel="1" widget="one2many_list" />
+                        </group>
+                    </page>
+                </xpath>
+
+
+
+                <xpath expr="//sheet//group[2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
