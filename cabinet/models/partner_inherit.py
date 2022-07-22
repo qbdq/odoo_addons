@@ -1,25 +1,37 @@
 from odoo import api, fields, models
 
 
-
 class PartnerInherit(models.Model):
     _inherit = 'res.partner'
 
+    company_type = fields.Selection(string='Company Type',
+                                    selection=[('patient', 'Patient'), ('person', 'Individual'),
+                                               ('company', 'Company')],
+                                    compute='', inverse='_write_company_type', default='patient')
+
+    @api.onchange('company_type')
+    def onchange_company_type(self):
+        self.is_company = (self.company_type in ('company', 'patient'))
+
+    def _write_company_type(self):
+        for partner in self:
+            partner.is_company = partner.company_type in ('company', 'patient')
+
     dob = fields.Date(string="Date of Birthday", required=False, )
-    age = fields.Integer(string="Age", required=False, compute="calcul_age")
+    age = fields.Integer(string="Age", required=False, )
     cin = fields.Char(string="CIN", required=False, )
 
     # Test general information
-    blood_type = fields.Selection([('A', 'A'),('B', 'B'),('AB', 'AB'),('O', 'O')], string ="Blood Type")
-    rh = fields.Selection([('-+', '+'),('--', '-')], string ="Rh")
-
+    blood_type = fields.Selection([('A', 'A'), ('B', 'B'), ('AB', 'AB'), ('O', 'O')], string="Blood Type")
+    rh = fields.Selection([('plus', '+'), ('moins', '-')], string="Rh")
 
     # Biometry
-    gender = fields.Selection(string="Gender", selection=[('male', 'Male'), ('female', 'Female'), ], required=True, default="male")
-    height = fields.Char(string='Height')
-    weight = fields.Char(string='Weight')
-    blood_type = fields.Selection([('A', 'A'),('B', 'B'),('AB', 'AB'), ('O', 'O')], string="Blood Type", default='A')
-    rh = fields.Selection([('-+', '+'), ('--', '-')], string ="Rh",default='+"')
+    gender = fields.Selection(string="Gender", selection=[('male', 'Male'), ('female', 'Female'), ], required=True,
+                              default="male")
+    height = fields.Char(string='Height', default=0)
+    weight = fields.Char(string='Weight', default=0)
+    blood_type = fields.Selection([('A', 'A'), ('B', 'B'), ('AB', 'AB'), ('O', 'O')], string="Blood Type", default='A')
+    rh = fields.Selection([('plus', '+'), ('moins', '-')], string="Rh", default='plus')
 
     diseases_ids = fields.One2many('partner.diseases', 'partner_id')
     medication_ids = fields.One2many('partner.medication', 'partner_id')
@@ -43,6 +55,7 @@ class PartnerInherit(models.Model):
     # medical_vaccination_ids = fields.One2many('medical.vaccination','medical_patient_vaccines_id')
     # medical_appointments_ids = fields.One2many('medical.appointment','patient_id',string='Appointments')
 
+    @api.onchange('dob')
     def calcul_age(self):
         for rec in self:
             if rec.dob:
@@ -51,52 +64,67 @@ class PartnerInherit(models.Model):
             else:
                 rec.age = 0
 
-        # for rec in self:
-        #     if rec.dob:
-        #         rec.age = fields.Date.today().year - rec.dob.year
-        #     else:
-        #         rec.age = 0
-
-
 
 class PartnerDiseases(models.Model):
     _name = "partner.diseases"
 
-    status_of_the_disease = fields.Selection([('chronic','Chronic'),('status quo','Status Quo'),('healed','Healed'), ('improving','Improving'), ('worsening', 'Worsening') ], 'Status of the disease')
-
-    is_active = fields.Boolean('Active Disease')
     partner_id = fields.Many2one('res.partner')
-    age = fields.Date('Age when diagnosed')
+
+    diseases_id = fields.Many2one("diseases.diseases", string="Disease", required=True, )
+
+    status_of_the_disease = fields.Selection(
+        [('chronic', 'Chronic'), ('quo', 'Quo'), ('healed', 'Healed'), ('improving', 'Improving'),
+         ('worsening', 'Worsening')], 'Status', help="Status of the disease")
+
+    is_active = fields.Boolean('Active')
+    age = fields.Integer('Age', help="Age when diagnosed")
     disease_severity = fields.Selection([('mild', 'Mild'), ('moderate', 'Moderate'), ('severe', 'Severe')], 'Severity')
-    is_allergy = fields.Boolean('Allergic Disease')
+    is_allergy = fields.Boolean('Allergic')
     pregnancy_warning = fields.Boolean('Pregnancy warning')
-    weeks_of_pregnancy = fields.Integer('Contracted in pregnancy week #')
-    is_on_treatment = fields.Boolean('Currently on Treatment')
+    # weeks_of_pregnancy = fields.Integer('pregnancy week', help="Contracted in pregnancy week #")
+    is_on_treatment = fields.Boolean('On Treatment', help="Currently on Treatment")
     treatment_description = fields.Char('Treatment Description')
     date_start_treatment = fields.Date('Start of treatment')
     date_stop_treatment = fields.Date('End of treatment')
 
 
-class  PartnerMedication(models.Model):
+class Diseases(models.Model):
+    _name = 'diseases.diseases'
+    _rec_name = 'name'
+
+    name = fields.Char()
+
+
+class PartnerMedication(models.Model):
     _name = "partner.medication"
 
-    name = fields.Char(string="Medication name", required=False, )
-    partner_id = fields.Many2one('res.partner')
+    madication_id = fields.Many2one("medication.medication", string="Medication", required=True, )
+    quantity = fields.Integer(string="Quantity", required=False, default=1)
+    partner_id = fields.Many2one("res.partner")
 
+
+class Medication(models.Model):
+    _name = 'medication.medication'
+    rec_name = "name"
+
+    name = fields.Char()
 
 
 class DossierPatient(models.Model):
-    _name="partner.files"
+    _name = "partner.files"
 
-    description = fields.Char(string="Description", required=False, )
-    payment_method = fields.Selection(string="Methode", selection=[('cheque', 'Cheque'), ('espece', 'Espece'), ('carte bancaire', 'Carte bancaire') ], required=False, )
-    condition = fields.Selection(string="Condition", selection=[('mensuel', 'Mensuel'), ('chaque seance', 'Chaque seance'), ], required=False, )
+    description = fields.Char(string="Description", required=True, )
+    payment_method = fields.Selection(string="Methode", selection=[('cheque', 'Cheque'), ('espece', 'Espece'),
+                                                                   ('carte bancaire', 'Carte bancaire')],
+                                      required=False, )
+    condition = fields.Selection(string="Condition",
+                                 selection=[('mensuel', 'Mensuel'), ('chaque seance', 'Chaque seance'), ],
+                                 required=False, )
     full_price = fields.Integer(string="Total payable", required=False, )
-    remaining  = fields.Integer(string="Remaining", required=False, )
-    status = fields.Selection(string="Status", selection=[('paid', 'Paid'), ('in progress', 'In Progress'), ('no payement', 'No Payement'), ], required=False, )
+    remaining = fields.Integer(string="Remaining", required=False, )
+    status = fields.Selection(string="Status", selection=[('paid', 'Paid'), ('in progress', 'In Progress'),
+                                                          ('no payement', 'No Payement'), ], required=False, )
     start_date = fields.Date(string="File date", required=False, )
 
-    partner_id = fields.Many2one(comodel_name="res.partner")
+    partner_id = fields.Many2one("res.partner")
     appointment_ids = fields.One2many('calendar.event', 'appointments_id')
-
-

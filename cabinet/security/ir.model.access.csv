@@ -1,2 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_cabinet_cabinet,cabinet.cabinet,model_cabinet_cabinet,base.group_user,1,1,1,1
+access_partner_diseases,access.partner.diseases,cabinet.model_partner_diseases,,1,1,1,1
+access_partner_medication,access.partner.medication,cabinet.model_partner_medication,,1,1,1,1
+access_partner_files,access.partner.files,cabinet.model_partner_files,,1,1,1,1
+access_medication_medication,access.medication.medication,cabinet.model_medication_medication,,1,1,1,1
+access_diseases_diseases,access.diseases.diseases,cabinet.model_diseases_diseases,,1,1,1,1
