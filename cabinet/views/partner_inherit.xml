@@ -81,25 +81,25 @@
                                 </group>
                             </group>
                         </page>
-                        <page string="Appointment">
+                        <page string="Rendez-vous">
                             <group>
                                 <field name="files_ids" nolabel="1">
                                     <tree editable="bottom">
                                         <field name="partner_id" invisible="1"/>
                                         <field name="appointment_id"/>
                                         <field name="type"/>
-                                        <field name="description"/>
-                                        <field name="payment_method"/>
-                                        <field name="condition"/>
-                                        <field name="full_price"/>
-                                        <field name="remaining"/>
+<!--                                        <field name="description"/>-->
+<!--                                        <field name="payment_method"/>-->
+<!--                                        <field name="condition"/>-->
+<!--                                        <field name="full_price"/>-->
+<!--                                        <field name="remaining"/>-->
                                         <field name="status"/>
                                         <field name="start_date"/>
                                     </tree>
                                 </field>
                             </group>
                         </page>
-                        <page string="Diseases">
+                        <page string="Maladies">
                             <field name="diseases_ids" nolabel="1">
                                 <tree editable="bottom">
                                     <field name="partner_id" invisible="1"/>
@@ -119,7 +119,7 @@
                                 </tree>
                             </field>
                         </page>
-                        <page string="Medicament">
+                        <page string="Médicament">
                             <group>
                                 <field name="medication_ids" nolabel="1">
                                     <tree editable="bottom">

@@ -34,11 +34,7 @@
                 </xpath>
 
                 <xpath expr="//field[@name='user_id']" position="attributes">
-                    <attribute name="string">Doctor</attribute>
-                </xpath>
-
-                <xpath expr="//field[@name='categ_ids']" position="after">
-                    <field name="appointments_id">file</field>
+                    <attribute name="string">Docteur</attribute>
                 </xpath>
             </field>
         </record>

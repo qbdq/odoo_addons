@@ -4,10 +4,10 @@ from odoo import api, fields, models
 class CalenderEventInherit(models.Model):
     _inherit = "calendar.event"
 
-    type = fields.Selection(string="Type", selection=[('consultation', 'Consultation'), ('control', 'Control'), ],
+    type = fields.Selection(string="Type", selection=[('consultation', 'Consultation'), ('control', 'Contrôle'), ],
                             required=True, default='consultation')
 
-    appointments_id = fields.Many2one('partner.files', string='File name')
+    appointments_id = fields.Many2one('partner.files', string='Rendez-vous')
     patient_id = fields.Many2one("res.partner", string="Patient", required=False, )
     partner_ids = fields.Many2many(
         'res.partner', 'calendar_event_res_partner_rel',
@@ -22,15 +22,17 @@ class CalenderEventInherit(models.Model):
     @api.model_create_multi
     def create(self, values):
         res = super(CalenderEventInherit, self).create(values)
-        file_val = {
-            'appointment_id': res.id,
-            'type': values.get('type'),
-            'description': values.get('description'),
-            'start_date': values.get('start'),
-            'partner_id': values.get('patient_id'),
-        }
-        self.env['partner.files'].create(file_val)
-
+        try:
+            file_val = {
+                'appointment_id': res.id,
+                'type': values.get('type'),
+                'description': values.get('description'),
+                'start_date': values.get('start'),
+                'partner_id': values.get('patient_id'),
+            }
+            self.env['partner.files'].create(file_val)
+        except:
+            pass
         return res
 
     @api.onchange('type')
