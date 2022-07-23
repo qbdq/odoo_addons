@@ -2,45 +2,36 @@
 <odoo>
     <data>
 
+        <record id="view_calendar_event_calendar_inheritt_cabinet" model="ir.ui.view">
+            <field name="name">calendar.event.calendar.inheritt.cabinet</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_calendar"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//calendar" position="attributes">
+                    <attribute name="event_open_popup">0</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
         <record id="view_calendar_event_form_inheritt_cabinet" model="ir.ui.view">
             <field name="name">calendar.event.inheritt.cabinet</field>
             <field name="model">calendar.event</field>
             <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
             <field name="arch" type="xml">
 
-                <xpath expr="//field[@name='name']" position="attributes">
-                    <attribute name="readonly">1</attribute>
+                <xpath expr="//field[@name='partner_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                    <attribute name="force_save">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_ids']" position="after">
+                    <field name="patient_id"/>
                 </xpath>
 
                 <xpath expr="//field[@name='start']" position="before">
-                    <field name="type" context="{'default_type':'Control'}"/>
+                    <field name="type"/>
                 </xpath>
-
-                <!--           Disable notebook pages              -->
-                <xpath expr="//notebook//page[2]" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </xpath>
-
-                <xpath expr="//notebook//page[3]" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </xpath>
-
-                <!--           Disable Send SMS / Email button         -->
-                <!--                <xpath expr="//div[@name='send_buttons']" position="attributes">-->
-                <!--                    <attribute name="invisible">1</attribute>-->
-                <!--                </xpath>-->
-
-
-                <!--           Disable Video call location         -->
-                <!--                <xpath expr="//field[@name='videocall_location']" position="attributes">-->
-                <!--                    <attribute name="invisible">1</attribute>-->
-                <!--                </xpath>-->
-
-                <!--                           Disable Send location         -->
-                <xpath expr="//field[@name='location']" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </xpath>
-
 
                 <xpath expr="//field[@name='user_id']" position="attributes">
                     <attribute name="string">Doctor</attribute>

@@ -112,6 +112,7 @@ class Medication(models.Model):
 
 class DossierPatient(models.Model):
     _name = "partner.files"
+    _rec_name = "description"
 
     description = fields.Char(string="Description", required=True, )
     payment_method = fields.Selection(string="Methode", selection=[('cheque', 'Cheque'), ('espece', 'Espece'),
@@ -124,7 +125,9 @@ class DossierPatient(models.Model):
     remaining = fields.Integer(string="Remaining", required=False, )
     status = fields.Selection(string="Status", selection=[('paid', 'Paid'), ('in progress', 'In Progress'),
                                                           ('no payement', 'No Payement'), ], required=False, )
-    start_date = fields.Date(string="File date", required=False, )
+    start_date = fields.Datetime(string="File date", required=False, )
 
     partner_id = fields.Many2one("res.partner")
-    appointment_ids = fields.One2many('calendar.event', 'appointments_id')
+    appointment_id = fields.Many2one('calendar.event', string='Appointment', required=True)
+    type = fields.Selection(string="Type", selection=[('consultation', 'Consultation'), ('control', 'Control'), ],
+                            required=False, default='consultation')

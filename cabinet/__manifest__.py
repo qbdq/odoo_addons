@@ -27,6 +27,7 @@
         'security/ir.model.access.csv',
         'views/partner_inherit.xml',
         'views/calendar_event.xml',
+        'views/configuration.xml',
 
     ],
 }

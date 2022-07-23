@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="medicament_form" model="ir.ui.view">
+            <field name="name">medication.medication.form</field>
+            <field name="model">medication.medication</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="medicament_tree" model="ir.ui.view">
+            <field name="name">medication.medication.tree</field>
+            <field name="model">medication.medication</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="files_form" model="ir.ui.view">
+            <field name="name">partner.files.form</field>
+            <field name="model">partner.files</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="description"/>
+                            <field name="payment_method"/>
+                            <field name="condition"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="files_tree" model="ir.ui.view">
+            <field name="name">partner.files.tree</field>
+            <field name="model">partner.files</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="description"/>
+                    <field name="payment_method"/>
+                    <field name="condition"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="medicament_action" model="ir.actions.act_window">
+            <field name="name">Medicament</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">medication.medication</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="files_action" model="ir.actions.act_window">
+            <field name="name">Files</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">partner.files</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- This Menu Item Must have a parent -->
+        <menuitem id="medicament_menu"
+                  name="Medicament"
+                  parent="contacts.res_partner_menu_config"
+                  sequence="7"
+                  action="medicament_action"
+        />
+
+        <!-- This Menu Item Must have a parent -->
+        <menuitem id="files_menu"
+                  name="Files"
+                  parent="contacts.res_partner_menu_config"
+                  sequence="8"
+                  action="files_action"
+        />
+
+    </data>
+</odoo>
