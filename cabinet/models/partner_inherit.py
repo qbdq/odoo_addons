@@ -4,8 +4,8 @@ from odoo import api, fields, models
 class PartnerInherit(models.Model):
     _inherit = 'res.partner'
 
-    # num_dossier = fields.Char(string="Numéro Dossier", required=False, )
-    # premier_visite = fields.Date(string="Date 1er Visite", required=False, )
+    num_dossier = fields.Char(string="Numéro Dossier", required=False, )
+    premier_visite = fields.Date(string="Date 1er Visite", required=False, )
 
     company_type = fields.Selection(string='Company Type',
                                     selection=[('patient', 'Patient'), ('person', 'Individual'),
