@@ -35,9 +35,9 @@ class CalenderEventInherit(models.Model):
             pass
         return res
 
-    @api.onchange('type')
+    @api.onchange('type', 'patient_id')
     def change_name_field(self):
         for rec in self:
-            if rec.type:
+            if rec.type and rec.patient_id:
                 rec.name = ""
-                rec.name = f"{rec.type} - {rec.partner_ids.name}"
+                rec.name = f"{rec.type} - {rec.patient_id.name}"
