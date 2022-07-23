@@ -3,6 +3,38 @@
     <data>
 
         <!-- Inherit Form View to Modify it -->
+        <record id="view_res_partner_filter_num_doss_inheritt" model="ir.ui.view">
+            <field name="name">res.partner.num.dossier.search.inheritt</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='name']" position="replace">
+                    <field name="name"
+                           filter_domain="['|', '|', '|', ('display_name', 'ilike', self), ('ref', '=', self), ('email', 'ilike', self), ('num_dossier', 'ilike', self)]"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="res_partner_kanban_viewnum_soddier_inheritt" model="ir.ui.view">
+            <field name="name">res.partner.numdossier.inheritt</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='display_name']" position="before">
+                    <field name="num_dossier"/>
+                </xpath>
+                <xpath expr="//strong[hasclass('o_kanban_record_title')]" position="before">
+                    <field name="num_dossier"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- Inherit Form View to Modify it -->
         <record id="view_partner_form_inheritt_cabinet" model="ir.ui.view">
             <field name="name">res.partner.inheritt.cabinet</field>
             <field name="model">res.partner</field>

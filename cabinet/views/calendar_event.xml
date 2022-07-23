@@ -2,6 +2,20 @@
 <odoo>
     <data>
 
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_calendar_event_search_num_doss_inheritt" model="ir.ui.view">
+            <field name="name">calendar.event.num.dossier.search.inheritt</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_search"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='name']" position="replace">
+                        <field name="name" string="Meeting" filter_domain="['|', ('num_dossier', 'ilike', self), ('name', 'ilike', self)]"/>
+                </xpath>
+
+            </field>
+        </record>
+
         <record id="view_calendar_event_calendar_inheritt_cabinet" model="ir.ui.view">
             <field name="name">calendar.event.calendar.inheritt.cabinet</field>
             <field name="model">calendar.event</field>
