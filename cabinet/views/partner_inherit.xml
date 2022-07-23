@@ -19,12 +19,12 @@
 
                 <xpath expr="//notebook" position="after">
                     <notebook attrs="{'invisible': [('company_type', '!=', 'patient')]}">
-                        <page string="General information" name="general_information">
+                        <page string="Informations Générales" name="general_information">
 
                             <group>
-                                <group string="Biometry">
+                                <group string="Biométrie">
                                     <field name="gender"/>
-                                    <label string="Data of birth" for="blood_type"/>
+                                    <label string="Date de naissance" for="blood_type"/>
                                     <div>
                                         <field name="dob" class="oe_inline" style="margin-right:30px;"/>
                                         <span class="oe_inline"><field name="age" class="oe_inline" readonly="1"
@@ -32,28 +32,28 @@
                                             years</span>
                                     </div>
 
-                                    <label string="Blood type" for="blood_type"/>
+                                    <label string="Groupe sanguin" for="blood_type"/>
                                     <div>
                                         <field name="blood_type" class="oe_inline"/>
                                         <field name="rh" class="oe_inline"/>
                                     </div>
-                                    <label string="Height" for="height"/>
+                                    <label string="Hauteur" for="height"/>
                                     <div>
                                         <field name="height" class="oe_inline"/> mm
                                     </div>
-                                    <label string="Weight" for="weight"/>
+                                    <label string="Poids" for="weight"/>
 
                                     <div>
                                         <field name="weight" class="oe_inline"/> kg
                                     </div>
                                 </group>
 
-                                <group string="Other">
+                                <group string="Autre">
 
                                 </group>
                             </group>
                             <group>
-                                <group string="Patient Address">
+                                <group string="Adresse du Patient">
                                     <div class="o_address_format">
                                         <field name="street" placeholder="Street..." class="o_address_street"
                                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
