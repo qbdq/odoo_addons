@@ -1,5 +1,6 @@
 from odoo import api, fields, models
-
+from dateutil import relativedelta
+from datetime import date
 
 class PartnerInherit(models.Model):
     _inherit = 'res.partner'
@@ -22,6 +23,7 @@ class PartnerInherit(models.Model):
 
     dob = fields.Date(string="Date d'anniversaire", required=False, )
     age = fields.Integer(string="Âge", required=False, )
+
     cin = fields.Char(string="CIN", required=False, )
 
     # Test general information
@@ -40,32 +42,20 @@ class PartnerInherit(models.Model):
     medication_ids = fields.One2many('partner.medication', 'partner_id')
     files_ids = fields.One2many('partner.files', 'partner_id')
 
-    #
-    # # life style
-    # smoking = fields.Boolean(string="Smokes")
-    # smoking_number = fields.Integer(string="Cigarretes a day")
-    # ex_smoker = fields.Boolean(string="Ex-smoker")
-    # age_start_smoking = fields.Integer(string="Age started to smoke")
-    # age_quit_smoking = fields.Integer(string="Age of quitting")
-
-    # alcohol = fields.Boolean(string="Drinks Alcohol")
-    # ex_alcohol = fields.Boolean(string="Ex alcoholic")
-    # age_start_drinking = fields.Integer(string="Age started to drink")
-    # age_quit_drinking = fields.Integer(string="Age quit drinking")
-    #
-
-    # Medication
-    # medical_vaccination_ids = fields.One2many('medical.vaccination','medical_patient_vaccines_id')
-    # medical_appointments_ids = fields.One2many('medical.appointment','patient_id',string='Appointments')
-
     @api.onchange('dob')
     def calcul_age(self):
         for rec in self:
+            today = date.today()
             if rec.dob:
-                today = fields.Date.today()
                 rec.age = today.year - rec.dob.year - ((today.month, today.day) < (rec.dob.month, rec.dob.day))
             else:
                 rec.age = 0
+
+    @api.onchange('age')
+    def inverse_calcul_age(self):
+        today = fields.Date.today()
+        for rec in self:
+            rec.dob = today - relativedelta.relativedelta(years=rec.age)
 
 
 class PartnerDiseases(models.Model):
@@ -84,7 +74,6 @@ class PartnerDiseases(models.Model):
     disease_severity = fields.Selection([('mild', 'Bénin'), ('moderate', 'Modéré'), ('severe', 'Sévère')], 'Gravité')
     is_allergy = fields.Boolean('Allergique')
     pregnancy_warning = fields.Boolean('Avertissement de grossesse')
-    # weeks_of_pregnancy = fields.Integer('pregnancy week', help="Contracted in pregnancy week #")
     is_on_treatment = fields.Boolean('Sur le traitement', help="Actuellement en traitement")
     treatment_description = fields.Char('Description du traitement')
     date_start_treatment = fields.Date('Début du traitement')

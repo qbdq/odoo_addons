@@ -35,10 +35,9 @@
                                     <field name="gender"/>
                                     <label string="Date de naissance" for="blood_type"/>
                                     <div>
-                                        <field name="dob" class="oe_inline" style="margin-right:30px;"/>
-                                        <span class="oe_inline"><field name="age" class="oe_inline" readonly="1"
-                                                                       force_save="1"/>
-                                            years</span>
+                                        <field name="dob" class="oe_inline" force_save="1" style="margin-right:30px;"/>
+                                        <field name="age" class="oe_inline" force_save="1"/>
+                                        <span class="oe_read_only"> years</span>
                                     </div>
 
                                     <label string="Groupe sanguin" for="blood_type"/>
