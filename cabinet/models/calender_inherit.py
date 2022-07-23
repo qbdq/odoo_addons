@@ -9,6 +9,8 @@ class CalenderEventInherit(models.Model):
 
     appointments_id = fields.Many2one('partner.files', string='Rendez-vous')
     patient_id = fields.Many2one("res.partner", string="Patient", required=False, )
+    num_dossier = fields.Char(related="patient_id.num_dossier", required=False, )
+
     partner_ids = fields.Many2many(
         'res.partner', 'calendar_event_res_partner_rel',
         string='Attendees', )
