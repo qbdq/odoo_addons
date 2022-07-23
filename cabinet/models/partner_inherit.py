@@ -55,7 +55,8 @@ class PartnerInherit(models.Model):
     def inverse_calcul_age(self):
         today = fields.Date.today()
         for rec in self:
-            rec.dob = today - relativedelta.relativedelta(years=rec.age)
+            dob = today - relativedelta.relativedelta(years=rec.age)
+            rec.dob = date(year=dob.year, month=1, day=1)
 
 
 class PartnerDiseases(models.Model):
