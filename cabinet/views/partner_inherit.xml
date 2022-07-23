@@ -17,6 +17,15 @@
                     <attribute name="attrs">{'invisible': [('company_type', '=', 'patient')]}</attribute>
                 </xpath>
 
+                <xpath expr="//notebook" position="before">
+                    <group attrs="{'invisible': [('company_type', '!=', 'patient')]}">
+                        <group>
+                            <field name="num_dossier"/>
+                            <field name="premier_visite"/>
+                        </group>
+                    </group>
+                </xpath>
+
                 <xpath expr="//notebook" position="after">
                     <notebook attrs="{'invisible': [('company_type', '!=', 'patient')]}">
                         <page string="Informations Générales" name="general_information">
@@ -88,11 +97,11 @@
                                         <field name="partner_id" invisible="1"/>
                                         <field name="appointment_id"/>
                                         <field name="type"/>
-<!--                                        <field name="description"/>-->
-<!--                                        <field name="payment_method"/>-->
-<!--                                        <field name="condition"/>-->
-<!--                                        <field name="full_price"/>-->
-<!--                                        <field name="remaining"/>-->
+                                        <!--                                        <field name="description"/>-->
+                                        <!--                                        <field name="payment_method"/>-->
+                                        <!--                                        <field name="condition"/>-->
+                                        <!--                                        <field name="full_price"/>-->
+                                        <!--                                        <field name="remaining"/>-->
                                         <field name="status"/>
                                         <field name="start_date"/>
                                     </tree>
