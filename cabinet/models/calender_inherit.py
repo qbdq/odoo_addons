@@ -21,7 +21,7 @@ class CalenderEventInherit(models.Model):
             if rec.patient_id not in rec.partner_ids:
                 rec.partner_ids = rec.patient_id
 
-    @api.model_create_multi
+    @api.model
     def create(self, values):
         res = super(CalenderEventInherit, self).create(values)
         try:
@@ -43,3 +43,21 @@ class CalenderEventInherit(models.Model):
             if rec.type and rec.patient_id:
                 rec.name = ""
                 rec.name = f"{rec.type} - {rec.patient_id.name}"
+
+    r_sph = fields.Float(string="SPH",  required=False, )
+    r_cyl = fields.Float(string="CYL",  required=False, )
+    r_axis = fields.Float(string="AXIS",  required=False, )
+    r_av = fields.Float(string="AV",  required=False, )
+    r_pup_dist = fields.Float(string="PUP DIST",  required=False, )
+    r_add = fields.Float(string="ADD",  required=False, )
+    r_prism = fields.Float(string="PRISM",  required=False, )
+    r_base = fields.Float(string="BASE",  required=False, )
+
+    g_sph = fields.Float(string="SPH",  required=False, )
+    g_cyl = fields.Float(string="CYL",  required=False, )
+    g_axis = fields.Float(string="AXIS",  required=False, )
+    g_av = fields.Float(string="AV",  required=False, )
+    g_pup_dist = fields.Float(string="PUP DIST",  required=False, )
+    g_add = fields.Float(string="ADD",  required=False, )
+    g_prism = fields.Float(string="PRISM",  required=False, )
+    g_base = fields.Float(string="BASE",  required=False, )

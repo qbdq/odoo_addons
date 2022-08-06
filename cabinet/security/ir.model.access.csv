@@ -4,3 +4,5 @@ access_partner_medication,access.partner.medication,cabinet.model_partner_medica
 access_partner_files,access.partner.files,cabinet.model_partner_files,,1,1,1,1
 access_medication_medication,access.medication.medication,cabinet.model_medication_medication,,1,1,1,1
 access_diseases_diseases,access.diseases.diseases,cabinet.model_diseases_diseases,,1,1,1,1
+access_refractometre_refractometre,access.refractometre.refractometre,cabinet.model_refractometre_refractometre,,1,1,1,1
+access_partner_refractometre,access.partner.refractometre,cabinet.model_partner_refractometre,,1,1,1,1

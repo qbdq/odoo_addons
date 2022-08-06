@@ -5,6 +5,11 @@ from datetime import date
 class PartnerInherit(models.Model):
     _inherit = 'res.partner'
 
+    refractometre_ids = fields.One2many("partner.refractometre",
+                                       inverse_name="partner_id",
+                                       string="Refractometre",
+                                       required=False, )
+
     num_dossier = fields.Char(string="Numéro Dossier", required=False, )
     premier_visite = fields.Date(string="Date 1er Visite", required=False, )
 
@@ -57,6 +62,22 @@ class PartnerInherit(models.Model):
         for rec in self:
             dob = today - relativedelta.relativedelta(years=rec.age)
             rec.dob = date(year=dob.year, month=1, day=1)
+
+
+class Refractometre(models.Model):
+    _name = 'refractometre.refractometre'
+    rec_name = "name"
+
+    name = fields.Char()
+
+
+class PartnerRefractometre(models.Model):
+    _name = 'partner.refractometre'
+
+    refractometre_id = fields.Many2one("refractometre.refractometre", string="Type", required=False, )
+    gauche = fields.Integer(string="Oeil Gauche", required=False, )
+    droite = fields.Integer(string="Oeil Droite", required=False, )
+    partner_id = fields.Many2one("res.partner", string="", required=False, )
 
 
 class PartnerDiseases(models.Model):
